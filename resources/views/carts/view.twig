@@ -1,0 +1,94 @@
+{% extends layout('cart') %}
+
+{% block content %}
+    <section id="cart">
+
+        <h2>Shopping Cart</h2>
+
+        {{ form_open({'url': cart().route('update')}) }}
+        {% if not cart.items.isEmpty() %}
+            {% for item in cart.items %}
+
+                <div class="card">
+                    <div class="card-block">
+
+                        <div class="media">
+                            <a class="media-left pull-left"
+                               href="{{ item.product.route('view') }}">
+                                {{ item.product.images.first.thumbnail|raw }}
+                            </a>
+                            <div class="media-body">
+                                <strong class="media-heading">{{ item.product.name }}</strong>
+
+                                {% for value in item.options %}
+                                    <span class="label label-primary">{{ value.name }}</span>
+                                {% endfor %}
+
+                                <br>
+
+                                <span class="text-muted">SKU: {{ item.product.sku }}</span>
+
+                                <br>
+
+                                <input class="form-control" name="quantity[{{ item.id }}]" value="{{ item.quantity }}">
+
+                                <h5>{{ item.product.price.currency }}</h5>
+
+                                <a href="{{ item.route('remove') }}">
+                                    Remove
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <br>
+
+            {% endfor %}
+
+            <hr>
+
+            <div class="text-right">
+                <button class="btn btn-primary">
+                    Update
+                </button>
+            </div>
+
+            <hr>
+
+            <div class="text-right">
+
+                <h5>
+                    <small>Sub-total: &dollar;{{ cart().subtotal }}</small>
+                    <br>
+                    <small>Discounts: &dollar;{{ cart().discounts }}</small>
+                    <br>
+                    <br>
+                    Total: &dollar;{{ cart().total }}
+                </h5>
+
+                <small>Shipping & taxes calculated in checkout.</small>
+
+                <br>
+                <br>
+
+                <a href="{{ route('anomaly.module.checkouts::checkouts.start') }}" class="btn btn-primary">
+                    Checkout
+                </a>
+            </div>
+
+        {% else %}
+            <div class="card">
+                <div class="card-block">
+
+                    Your cart is empty! <a href="{{ route('anomaly.module.products::products.index') }}">Continue
+                        shopping.</a>
+
+                </div>
+            </div>
+        {% endif %}
+        {{ form_close() }}
+
+    </section>
+{% endblock %}
