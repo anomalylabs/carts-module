@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'products' => 'Products',
+    'cart' => 'Cart',
 ];

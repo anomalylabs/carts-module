@@ -1,14 +1,7 @@
 <?php namespace Anomaly\CartsModule;
 
-use Anomaly\CartsModule\Cart\CartModel;
-use Anomaly\CartsModule\Cart\CartRepository;
-use Anomaly\CartsModule\Cart\Contract\CartRepositoryInterface;
-use Anomaly\CartsModule\Item\Contract\ItemRepositoryInterface;
-use Anomaly\CartsModule\Item\ItemModel;
-use Anomaly\CartsModule\Item\ItemRepository;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
-use Anomaly\Streams\Platform\Model\Carts\CartsCartsEntryModel;
-use Anomaly\Streams\Platform\Model\Carts\CartsItemsEntryModel;
+use Gloudemans\Shoppingcart\ShoppingcartServiceProvider;
 
 /**
  * Class CartsModuleServiceProvider
@@ -28,6 +21,15 @@ class CartsModuleServiceProvider extends AddonServiceProvider
      */
     protected $plugins = [
         CartsModulePlugin::class,
+    ];
+
+    /**
+     * The addon providers.
+     *
+     * @var array
+     */
+    protected $providers = [
+        ShoppingcartServiceProvider::class,
     ];
 
     /**
@@ -52,33 +54,9 @@ class CartsModuleServiceProvider extends AddonServiceProvider
             'as'   => 'anomaly.module.carts::cart.destroy',
             'uses' => 'Anomaly\CartsModule\Http\Controller\CartController@destroy',
         ],
-        'cart/update/{id}' => [
-            'as'   => 'anomaly.module.carts::item.update',
-            'uses' => 'Anomaly\CartsModule\Http\Controller\ItemsController@update',
-        ],
         'cart/remove/{id}' => [
-            'as'   => 'anomaly.module.carts::item.remove',
-            'uses' => 'Anomaly\CartsModule\Http\Controller\ItemsController@remove',
+            'as'   => 'anomaly.module.carts::cart.remove',
+            'uses' => 'Anomaly\CartsModule\Http\Controller\CartController@remove',
         ],
-    ];
-
-    /**
-     * The addon bindings.
-     *
-     * @var array
-     */
-    protected $bindings = [
-        CartsCartsEntryModel::class => CartModel::class,
-        CartsItemsEntryModel::class => ItemModel::class,
-    ];
-
-    /**
-     * The addon singletons.
-     *
-     * @var array
-     */
-    protected $singletons = [
-        CartRepositoryInterface::class => CartRepository::class,
-        ItemRepositoryInterface::class => ItemRepository::class,
     ];
 }

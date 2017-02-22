@@ -1,8 +1,8 @@
 <?php namespace Anomaly\CartsModule;
 
+use Anomaly\CartsModule\Cart\Cart;
 use Anomaly\CartsModule\Cart\Command\GetCart;
 use Anomaly\Streams\Platform\Addon\Plugin\Plugin;
-use Anomaly\Streams\Platform\Support\Decorator;
 
 /**
  * Class CartsModulePlugin
@@ -16,6 +16,13 @@ class CartsModulePlugin extends Plugin
 {
 
     /**
+     * The runtime cache.
+     *
+     * @var array
+     */
+    protected $cache = [];
+
+    /**
      * Get the functions.
      *
      * @return array
@@ -25,11 +32,15 @@ class CartsModulePlugin extends Plugin
         return [
             new \Twig_SimpleFunction(
                 'cart',
-                function ($instance = 'default') {
-                    return (new Decorator())->decorate($this->dispatch(new GetCart($instance)));
+                function () {
+
+                    if (isset($this->cache[$key = __METHOD__])) {
+                        return $this->cache[$key];
+                    }
+
+                    return $this->cache[$key] = app(Cart::class);
                 }
             ),
         ];
     }
-
 }

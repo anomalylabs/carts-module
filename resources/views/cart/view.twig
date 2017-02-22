@@ -37,7 +37,8 @@
             </div>
 
         {% else %}
-            Your cart is empty! <a href="{{ url_route('anomaly.module.carts::products.index') }}">Continue shopping.</a>
+            Your cart is empty! <a href="{{ url_route('anomaly.module.products::products.index') }}">
+            Continue shopping.</a>
         {% endif %}
         {{ form_close() }}
 
