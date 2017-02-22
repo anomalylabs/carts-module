@@ -1,0 +1,49 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in cart.content() %}
+        <tr>
+            <td width="100">
+                <a href="{{ item.entry.route('view') }}">
+                    {{ item.entry.images.first().decorated.preview|raw }}
+                </a>
+            </td>
+            <td>
+                <h4>
+                    <a href="{{ item.entry.route('view') }}">
+                        {{ item.name }}
+                    </a>
+                </h4>
+                <small class="text-muted">{{ item.entry.sku }}</small>
+            </td>
+            <td>
+                {{ currency_format(item.price) }}
+            </td>
+            <td>
+                <input
+                        class="form-control"
+                        name="quantity[{{ item.rowId }}]"
+                        value="{{ item.qty }}"
+                        style="width: 6rem;text-align: center;">
+            </td>
+            <td>
+                {{ currency_format(item.subtotal) }}
+            </td>
+            <td width="20">
+                <a href="{{ url_route('anomaly.module.carts::carts.remove', {'id': item.rowId}) }}" class="text-muted">
+                    Remove
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

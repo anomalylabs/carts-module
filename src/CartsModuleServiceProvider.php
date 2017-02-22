@@ -1,6 +1,14 @@
 <?php namespace Anomaly\CartsModule;
 
+use Anomaly\CartsModule\Cart\CartModel;
+use Anomaly\CartsModule\Cart\CartRepository;
+use Anomaly\CartsModule\Cart\Contract\CartRepositoryInterface;
+use Anomaly\CartsModule\Item\Contract\ItemRepositoryInterface;
+use Anomaly\CartsModule\Item\ItemModel;
+use Anomaly\CartsModule\Item\ItemRepository;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
+use Anomaly\Streams\Platform\Model\Carts\CartsCartsEntryModel;
+use Anomaly\Streams\Platform\Model\Carts\CartsItemsEntryModel;
 
 /**
  * Class CartsModuleServiceProvider
@@ -19,7 +27,7 @@ class CartsModuleServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $plugins = [
-        'Anomaly\CartsModule\CartsModulePlugin',
+        CartsModulePlugin::class,
     ];
 
     /**
@@ -28,24 +36,28 @@ class CartsModuleServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $routes = [
-        'cart/{instance?}'              => [
-            'as'   => 'anomaly.module.carts::carts.view',
-            'uses' => 'Anomaly\CartsModule\Http\Controller\CartsController@view',
+        'cart'             => [
+            'as'   => 'anomaly.module.carts::cart.view',
+            'uses' => 'Anomaly\CartsModule\Http\Controller\CartController@view',
         ],
-        'carts/{instance}/update'       => [
-            'as'   => 'anomaly.module.carts::carts.update',
-            'uses' => 'Anomaly\CartsModule\Http\Controller\CartsController@update',
+        'cart/add'         => [
+            'as'   => 'anomaly.module.carts::cart.add',
+            'uses' => 'Anomaly\CartsModule\Http\Controller\CartController@add',
         ],
-        'carts/{instance}/items/add'    => [
-            'as'   => 'anomaly.module.carts::items.add',
-            'uses' => 'Anomaly\CartsModule\Http\Controller\ItemsController@add',
+        'cart/update'      => [
+            'as'   => 'anomaly.module.carts::cart.update',
+            'uses' => 'Anomaly\CartsModule\Http\Controller\CartController@update',
         ],
-        'carts/{instance}/items/update' => [
-            'as'   => 'anomaly.module.carts::items.update',
+        'cart/destroy'     => [
+            'as'   => 'anomaly.module.carts::cart.destroy',
+            'uses' => 'Anomaly\CartsModule\Http\Controller\CartController@destroy',
+        ],
+        'cart/update/{id}' => [
+            'as'   => 'anomaly.module.carts::item.update',
             'uses' => 'Anomaly\CartsModule\Http\Controller\ItemsController@update',
         ],
-        'carts/items/remove/{id}'       => [
-            'as'   => 'anomaly.module.carts::items.remove',
+        'cart/remove/{id}' => [
+            'as'   => 'anomaly.module.carts::item.remove',
             'uses' => 'Anomaly\CartsModule\Http\Controller\ItemsController@remove',
         ],
     ];
@@ -56,8 +68,8 @@ class CartsModuleServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $bindings = [
-        'Anomaly\Streams\Platform\Model\Carts\CartsCartsEntryModel' => 'Anomaly\CartsModule\Cart\CartModel',
-        'Anomaly\Streams\Platform\Model\Carts\CartsItemsEntryModel' => 'Anomaly\CartsModule\Item\ItemModel',
+        CartsCartsEntryModel::class => CartModel::class,
+        CartsItemsEntryModel::class => ItemModel::class,
     ];
 
     /**
@@ -66,8 +78,7 @@ class CartsModuleServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $singletons = [
-        'Anomaly\CartsModule\Cart\Contract\CartRepositoryInterface' => 'Anomaly\CartsModule\Cart\CartRepository',
-        'Anomaly\CartsModule\Item\Contract\ItemRepositoryInterface' => 'Anomaly\CartsModule\Item\ItemRepository',
+        CartRepositoryInterface::class => CartRepository::class,
+        ItemRepositoryInterface::class => ItemRepository::class,
     ];
-
 }
