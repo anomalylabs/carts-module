@@ -4,7 +4,7 @@ use Anomaly\CartsModule\Cart\Form\CartFormBuilder;
 use Anomaly\CartsModule\Cart\Table\CartTableBuilder;
 use Anomaly\Streams\Platform\Http\Controller\AdminController;
 
-class CartsModule extends AdminController
+class CartsController extends AdminController
 {
 
     /**
