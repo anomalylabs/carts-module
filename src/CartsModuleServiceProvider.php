@@ -85,6 +85,10 @@ class CartsModuleServiceProvider extends AddonServiceProvider
      */
     protected $routes = [
         'cart'                    => [
+            'as'   => 'anomaly.module.carts::cart',
+            'uses' => 'Anomaly\CartsModule\Http\Controller\CartsController@view',
+        ],
+        'carts/{instance}'        => [
             'as'   => 'anomaly.module.carts::carts.view',
             'uses' => 'Anomaly\CartsModule\Http\Controller\CartsController@view',
         ],

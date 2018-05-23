@@ -4,7 +4,6 @@ use Anomaly\CartsModule\Cart\Contract\CartInterface;
 use Anomaly\CartsModule\Item\Contract\ItemInterface;
 use Anomaly\CartsModule\Item\Contract\ItemRepositoryInterface;
 use Anomaly\CartsModule\Item\ItemModel;
-use Anomaly\ProductsModule\Contract\PurchasableInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -62,7 +61,7 @@ class AddItem
      */
     public function handle(ItemRepositoryInterface $items)
     {
-        if ($this->item instanceof PurchasableInterface) {
+        if ($this->item) {
 
             if (!$this->item->isPurchasable()) {
                 throw new \Exception('Item is not purchasable at this time.');

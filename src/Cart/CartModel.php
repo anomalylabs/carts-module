@@ -66,32 +66,6 @@ class CartModel extends CartsCartsEntryModel implements CartInterface
     }
 
     /**
-     * Return the cart total.
-     *
-     * @return float
-     */
-    public function total()
-    {
-        /* @var CartInterface $cart */
-        $cart = $this->dispatch(new GetCart());
-
-        return $cart->total();
-    }
-
-    /**
-     * Return the cart subtotal.
-     *
-     * @return float
-     */
-    public function subtotal()
-    {
-        /* @var CartInterface $cart */
-        $cart = $this->dispatch(new GetCart());
-
-        return $cart->subtotal();
-    }
-
-    /**
      * Return the total adjustments.
      *
      * @param        $type

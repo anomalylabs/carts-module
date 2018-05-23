@@ -33,16 +33,6 @@ interface CartInterface extends EntryInterface
     public function remove($id);
 
     /**
-     * Return the cart total.
-     */
-    public function total();
-
-    /**
-     * Return the cart subtotal.
-     */
-    public function subtotal();
-
-    /**
      * Get the tax.
      *
      * @return float
