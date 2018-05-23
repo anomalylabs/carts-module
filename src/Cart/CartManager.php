@@ -51,9 +51,9 @@ class CartManager
      * Create a new CartInstance instance.
      *
      * @param CartRepositoryInterface $carts
-     * @param Request $request
-     * @param CartPersistence $persistence
-     * @param Guard $auth
+     * @param Request                 $request
+     * @param CartPersistence         $persistence
+     * @param Guard                   $auth
      */
     public function __construct(
         CartRepositoryInterface $carts,
@@ -79,7 +79,7 @@ class CartManager
 
         /* @var CartInterface $cart */
         if (!$cart = $this->carts->findByStrId($this->persistence->id($instance))) {
-            $cart = $this->carts->create(
+            $cart = $this->carts->newInstance(
                 [
                     'user'       => $this->auth->user(),
                     'ip_address' => $this->request->ip(),
