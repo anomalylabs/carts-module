@@ -1,0 +1,49 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in cart.items %}
+        <tr>
+            <td width="100">
+                <a href="{{ item.entry.route('view') }}">
+                    {{ item.image.fit(64, 64)|raw }}
+                </a>
+            </td>
+            <td>
+                <h4>
+                    <a href="{{ item.entry.route('view') }}">
+                        {{ item.name }}
+                    </a>
+                </h4>
+                <small class="text-muted">{{ item.sku }}</small>
+            </td>
+            <td>
+                {{ item.price.currency }}
+            </td>
+            <td>
+                <input
+                        class="form-control"
+                        name="quantity[{{ item.id }}]"
+                        value="{{ item.quantity }}"
+                        style="width: 6rem;text-align: center;">
+            </td>
+            <td>
+                {{ item.subtotal.currency }}
+            </td>
+            <td width="20">
+                <a href="{{ item.route('remove') }}" class="text-muted">
+                    Remove
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

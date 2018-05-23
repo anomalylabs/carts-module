@@ -1,0 +1,34 @@
+{
+    "name": "anomaly/carts-module",
+    "type": "streams-addon",
+    "description": "A shopping cart engine for your online store.",
+    "keywords": [
+        "ecommerce",
+        "pyrocms cart",
+        "cart module"
+    ],
+    "homepage": "https://pyrocms.com/",
+    "license": "https://pyrocms.com/pro/license",
+    "authors": [
+        {
+            "name": "PyroCMS, Inc.",
+            "email": "support@pyrocms.com",
+            "homepage": "http://pyrocms.com/",
+            "role": "Owner"
+        },
+        {
+            "name": "Ryan Thompson",
+            "email": "ryan@pyrocms.com",
+            "homepage": "http://ryanthepyro.com/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@pyrocms.com"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anomaly\\CartsModule\\": "src/"
+        }
+    }
+}

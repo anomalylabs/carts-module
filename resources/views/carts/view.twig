@@ -1,0 +1,68 @@
+{% extends layout('cart') %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="jumbotron text-center">
+            <h1>Shopping Cart</h1>
+        </div>
+
+        {{ form_open({'url': cart.route('update')}) }}
+        {% if not cart.items.isEmpty() %}
+
+            {% include "anomaly.module.carts::carts/partials/items" %}
+
+            <hr>
+
+            <button class="btn btn-primary">Update</button>
+
+            <a href="{{ url_route('store::home') }}" class="btn btn-primary pull-right">
+                Continue Shopping
+            </a>
+
+            <hr>
+
+            <div class="text-right">
+
+                <h4>
+                    Sub-total: {{ cart().subtotal.currency }}
+
+                    <br>
+
+                    {% if cart().discounts.value %}
+
+                        <br>
+
+                        <small class="text-muted">Discounts: {{ cart().discounts.currency }}</small>
+
+                        <br>
+                    {% endif %}
+
+                    {% if cart().tax.value %}
+
+                        <br>
+
+                        <small class="text-muted">Tax: {{ cart().tax.currency }}</small>
+
+                        <br>
+                    {% endif %}
+
+                    <small class="text-muted">----<br>Total: {{ cart().total.currency }}</small>
+                </h4>
+
+                <br>
+                <br>
+
+                <a href="{{ url_route('store::checkout') }}" class="btn btn-primary">
+                    Checkout
+                </a>
+            </div>
+
+        {% else %}
+            Your cart is empty! <a href="{{ url_route('store::home') }}">
+            Continue shopping.</a>
+        {% endif %}
+        {{ form_close() }}
+
+    </div>
+{% endblock %}
