@@ -79,7 +79,7 @@ class CartManager
 
         /* @var CartInterface $cart */
         if (!$cart = $this->carts->findByStrId($this->persistence->id($instance))) {
-            $cart = $this->carts->newInstance(
+            $cart = $this->carts->create(
                 [
                     'user'       => $this->auth->user(),
                     'ip_address' => $this->request->ip(),
